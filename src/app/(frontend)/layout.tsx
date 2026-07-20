@@ -5,6 +5,7 @@ import { GeistSans } from 'geist/font/sans'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
+import { InitTheme } from '@/providers/Theme/InitTheme'
 import { Providers } from '@/providers'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
@@ -16,12 +17,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={`${GeistSans.variable} ${GeistMono.variable} dark`} data-theme="dark" lang="en">
+    <html className={`${GeistSans.variable} ${GeistMono.variable}`} lang="en" suppressHydrationWarning>
       <head>
+        <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <meta content="#eeeeee" media="(prefers-color-scheme: light)" name="theme-color" />
+        <meta content="#0a1020" media="(prefers-color-scheme: dark)" name="theme-color" />
       </head>
-      <body>
+      <body className="bg-page text-ink">
         <Providers>
           <AdminBar
             adminBarProps={{

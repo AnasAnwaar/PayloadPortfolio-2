@@ -37,6 +37,243 @@
 @source inline("border-warning");
 @source inline("bg-warning/30");
 
+/* ── Portfolio theme ──────────────────────────────────────────────────────────
+   Every palette value is a raw custom property so it can flip on [data-theme].
+   @theme below only aliases them, which keeps Tailwind utilities theme-aware.
+   `accent*` is the green family; `brand*` is the header/footer bar, which stays
+   charcoal in both modes and therefore needs its own foreground tokens.
+   Dark is the primary experience and the default. */
+:root,
+[data-theme='dark'] {
+  --p-page: #0e1211;
+  --p-raised: #161b19;
+  --p-line: #242b28;
+  --p-line-strong: #36403b;
+  --p-mute: #6b7671;
+  --p-ink: #e9efeb;
+  --p-ink-soft: #9aa8a1;
+
+  --p-accent: #35e08b;
+  --p-accent-deep: #22b46c;
+  --p-accent-bright: #8ff7c4;
+  --p-accent-soft: #10251b;
+
+  --p-brand: #090c0b;
+  --p-brand-fg: #e9efeb;
+  --p-brand-muted: #8b9a92;
+  --p-brand-line: #1d2422;
+
+  --p-scrim-strong: rgb(14 18 17 / 0.92);
+  --p-scrim-mid: rgb(14 18 17 / 0.55);
+  --p-scrim-none: rgb(14 18 17 / 0);
+  --p-glass: rgb(22 27 25 / 0.6);
+  --p-glow: rgb(53 224 139 / 0.2);
+  --p-shadow: rgb(0 0 0 / 0.55);
+}
+
+/* Light mode keeps the same charcoal bars and a darkened green for contrast. */
+[data-theme='light'] {
+  --p-page: #f3f5f4;
+  --p-raised: #ffffff;
+  --p-line: #dde3e0;
+  --p-line-strong: #c3ccc7;
+  --p-mute: #8b968f;
+  --p-ink: #101513;
+  --p-ink-soft: #4d5a54;
+
+  --p-accent: #10784a;
+  --p-accent-deep: #0b5a37;
+  --p-accent-bright: #17a566;
+  --p-accent-soft: #e0f4ea;
+
+  --p-brand: #0e1211;
+  --p-brand-fg: #f3f5f4;
+  --p-brand-muted: #a3b0a9;
+  --p-brand-line: #242b28;
+
+  --p-scrim-strong: rgb(243 245 244 / 0.92);
+  --p-scrim-mid: rgb(243 245 244 / 0.55);
+  --p-scrim-none: rgb(243 245 244 / 0);
+  --p-glass: rgb(255 255 255 / 0.62);
+  --p-glow: rgb(16 120 74 / 0.16);
+  --p-shadow: rgb(16 21 19 / 0.14);
+}
+
+@theme inline {
+  --color-page: var(--p-page);
+  --color-raised: var(--p-raised);
+  --color-line: var(--p-line);
+  --color-line-strong: var(--p-line-strong);
+  --color-mute: var(--p-mute);
+  --color-ink: var(--p-ink);
+  --color-ink-soft: var(--p-ink-soft);
+
+  --color-mint: var(--p-accent);
+  --color-mint-deep: var(--p-accent-deep);
+  --color-mint-bright: var(--p-accent-bright);
+  --color-mint-soft: var(--p-accent-soft);
+
+  --color-brand: var(--p-brand);
+  --color-brand-fg: var(--p-brand-fg);
+  --color-brand-muted: var(--p-brand-muted);
+  --color-brand-line: var(--p-brand-line);
+
+  --color-glass: var(--p-glass);
+}
+
+@layer utilities {
+  /* Frosted card used across the site — one class so the treatment stays consistent. */
+  .glass {
+    background: var(--p-glass);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    box-shadow:
+      0 1px 0 0 rgb(255 255 255 / 0.35) inset,
+      0 18px 40px -24px var(--p-shadow);
+  }
+
+  .glow {
+    box-shadow: 0 0 0 1px var(--p-glow), 0 22px 60px -28px var(--p-glow);
+  }
+
+  .text-gradient {
+    background: linear-gradient(100deg, var(--p-accent), var(--p-accent-bright) 55%, var(--p-accent));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Slow ambient wash behind the footer — long enough to read as atmosphere
+     rather than motion. */
+  .footer-aurora::before {
+    content: '';
+    position: absolute;
+    inset: -40% -10% auto -10%;
+    height: 22rem;
+    background:
+      radial-gradient(40% 60% at 20% 50%, var(--p-glow), transparent 70%),
+      radial-gradient(35% 55% at 75% 40%, var(--p-glow), transparent 70%);
+    filter: blur(38px);
+    animation: footer-drift 22s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+
+  @keyframes footer-drift {
+    from {
+      transform: translate3d(-4%, 0, 0) scale(1);
+      opacity: 0.55;
+    }
+    to {
+      transform: translate3d(6%, 6%, 0) scale(1.12);
+      opacity: 0.9;
+    }
+  }
+
+  /* Animated underline for footer links. */
+  .link-underline {
+    position: relative;
+  }
+
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: right;
+    background: var(--p-accent);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Filter-tab content swap. The list wrapper is keyed by the active filter, so
+     remounting replays this; children stagger via an inline animation-delay. */
+  .swap-in > * {
+    animation: swap-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Stagger the first few cards; anything beyond settles together. */
+  .swap-in > *:nth-child(2) { animation-delay: 60ms; }
+  .swap-in > *:nth-child(3) { animation-delay: 120ms; }
+  .swap-in > *:nth-child(4) { animation-delay: 180ms; }
+  .swap-in > *:nth-child(5) { animation-delay: 240ms; }
+  .swap-in > *:nth-child(n + 6) { animation-delay: 300ms; }
+
+  @keyframes swap-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Scroll-reveal. Elements start shifted, then .is-visible is toggled by an
+     IntersectionObserver. Motion is dropped entirely under reduced-motion. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Theme switching.
+   Preferred path: the View Transitions API snapshots the page and cross-fades it
+   on the compositor — one GPU animation instead of thousands of element ones.  */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.42s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  mix-blend-mode: normal;
+}
+
+/* Fallback for browsers without view transitions. Deliberately limited to the
+   three properties that actually change, and excluding the canvas, which must
+   never repaint through a transition. */
+html.theme-switching,
+html.theme-switching *:not(canvas):not(.no-theme-transition) {
+  transition:
+    background-color 0.38s ease,
+    border-color 0.38s ease,
+    color 0.38s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .footer-aurora::before {
+    animation: none;
+  }
+
+  .swap-in > * {
+    animation: none;
+  }
+}
+
 @theme {
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
