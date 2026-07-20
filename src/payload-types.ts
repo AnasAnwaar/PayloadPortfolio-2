@@ -2028,6 +2028,15 @@ export interface Portfolio {
     availability?: string | null;
     eyebrow?: string | null;
     headline: string;
+    /**
+     * Typed out one at a time under the headline, then erased and replaced by the next.
+     */
+    taglines?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
     roles?:
       | {
           role: string;
@@ -2206,6 +2215,12 @@ export interface PortfolioSelect<T extends boolean = true> {
         availability?: T;
         eyebrow?: T;
         headline?: T;
+        taglines?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
         roles?:
           | T
           | {

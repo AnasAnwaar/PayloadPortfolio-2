@@ -46,6 +46,12 @@ export const Portfolio: GlobalConfig = {
         { name: 'availability', type: 'text' },
         { name: 'eyebrow', type: 'text', defaultValue: "Hi, I'm" },
         { name: 'headline', type: 'text', required: true },
+        {
+          name: 'taglines',
+          type: 'array',
+          admin: { description: 'Typed out one at a time under the headline, then erased and replaced by the next.' },
+          fields: [{ name: 'text', type: 'text', required: true }],
+        },
         { name: 'roles', type: 'array', fields: [{ name: 'role', type: 'text', required: true }] },
         { name: 'primaryButtonLabel', type: 'text', defaultValue: 'View My Work' },
         { name: 'secondaryButtonLabel', type: 'text', defaultValue: "Let's Connect" },

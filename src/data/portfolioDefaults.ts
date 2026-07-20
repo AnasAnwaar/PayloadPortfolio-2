@@ -107,7 +107,7 @@ export const achievementSeeds = [
 export const portfolioSeed = {
   identity: { name: 'Syed Ibad Ali', initials: 'SI', professionalTitle: 'Backend Engineer', shortBio: 'Backend Engineer building scalable solutions with Node.js, Python, and AI/ML. Passionate about teaching and creating impact through technology.' },
   navigation: ['Home', 'About', 'Experience', 'Skills', 'Projects', 'Achievements', 'Contact'].map((label) => ({ label, href: label === 'Home' ? '#home' : `#${label.toLowerCase()}` })),
-  hero: { availability: 'Available for opportunities', eyebrow: "Hi, I'm", headline: 'Syed Ibad Ali', roles: ['Backend Engineer', 'IT Instructor', 'Web Developer', 'Shopify Developer'].map((role) => ({ role })), primaryButtonLabel: 'View My Work', secondaryButtonLabel: "Let's Connect", techLabel: 'Tech I love working with' },
+  hero: { availability: 'Available for opportunities', eyebrow: "Hi, I'm", headline: 'Syed Ibad Ali', taglines: ['2x Competition Winner', 'Teaching 100+ Students', 'Building Scalable Backends', 'AI/ML Explorer'].map((text) => ({ text })), roles: ['Backend Engineer', 'IT Instructor', 'Web Developer', 'Shopify Developer'].map((role) => ({ role })), primaryButtonLabel: 'View My Work', secondaryButtonLabel: "Let's Connect", techLabel: 'Tech I love working with' },
   about: {
     heading: 'About Me', description: 'Get to know me better — my journey, passion, and what drives me to create impactful software.', experienceBadge: '2+ Years Experience', location: 'Karachi, Sindh, Pakistan', email: 'ibad1657@gmail.com', phone: '+92 336 8251372',
     paragraphs: [

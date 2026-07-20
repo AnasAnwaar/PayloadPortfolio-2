@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { FormEvent, useMemo, useState } from 'react'
+import { FormEvent, memo, useEffect, useMemo, useState } from 'react'
 
 type Seed = typeof import('@/data/portfolioDefaults').portfolioSeed
 
@@ -28,6 +28,40 @@ const iconMap = { BrainCircuit, Code2, Database, Server, Shield, ShoppingBag, Sm
 const mediaURL = (value?: Media | number | null) => typeof value === 'object' && value?.url ? value.url : undefined
 const relationTitle = <T extends { title: string }>(value: number | T) => typeof value === 'object' ? value.title : ''
 const categorySlug = <T extends { slug: string }>(value: number | T) => typeof value === 'object' ? value.slug : ''
+
+const TYPE_MS = 85
+const ERASE_MS = 40
+const HOLD_MS = 1700
+
+// Own component so a character tick re-renders this line only, never the rest of the page.
+const Typewriter = memo(function Typewriter({ phrases }: { phrases: string[] }) {
+  const [index, setIndex] = useState(0)
+  const [count, setCount] = useState(0)
+  const [erasing, setErasing] = useState(false)
+  const current = phrases.length ? phrases[index % phrases.length] : ''
+
+  useEffect(() => {
+    if (!current) return
+    if (!erasing && count === current.length) {
+      const timer = setTimeout(() => setErasing(true), HOLD_MS)
+      return () => clearTimeout(timer)
+    }
+    if (erasing && count === 0) {
+      setErasing(false)
+      setIndex((value) => value + 1)
+      return
+    }
+    const timer = setTimeout(() => setCount((value) => value + (erasing ? -1 : 1)), erasing ? ERASE_MS : TYPE_MS)
+    return () => clearTimeout(timer)
+  }, [count, current, erasing])
+
+  return (
+    <p aria-label={phrases.join(', ')} className="mt-6 flex min-h-[2rem] items-center justify-center text-xl font-semibold text-slate-300 sm:min-h-[2.25rem] sm:text-2xl">
+      <span aria-hidden>{current.slice(0, count)}</span>
+      <span aria-hidden className="ml-1 h-[1.15em] w-0.5 animate-pulse bg-cyan-400" />
+    </p>
+  )
+})
 
 const SectionHeading = ({ description, heading }: { description: string; heading: string }) => (
   <div className="mx-auto mb-12 max-w-3xl text-center md:mb-16">
@@ -72,6 +106,10 @@ export function PortfolioHome(props: Props) {
   const filteredProjects = useMemo(() => projectFilter === 'all' ? props.projects : props.projects.filter((item) => categorySlug(item.category) === projectFilter), [projectFilter, props.projects])
   const identity = content.identity as Portfolio['identity']
   const profileImage = mediaURL(identity.profileImage)
+  const taglines = useMemo(() => {
+    const items = (content.hero.taglines || []).map((item) => item.text).filter(Boolean)
+    return items.length ? items : props.fallback.hero.taglines.map((item) => item.text)
+  }, [content.hero.taglines, props.fallback.hero.taglines])
   const featuredSkills = 'featuredSkills' in content.hero ? content.hero.featuredSkills : []
   const aboutInfo = [
     { Icon: MapPin, label: 'Location', value: content.about.location },
@@ -101,6 +139,7 @@ export function PortfolioHome(props: Props) {
         <div className="relative mx-auto max-w-5xl">
           {content.hero.availability && <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm text-emerald-300"><span className="size-2 animate-pulse rounded-full bg-emerald-400" />{content.hero.availability}</div>}
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">{content.hero.eyebrow} <span className="bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent">{content.hero.headline}</span></h1>
+          <Typewriter phrases={taglines} />
           <div className="mt-6 flex flex-wrap justify-center gap-2">{(content.hero.roles || []).map((item) => <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300" key={item.role}>{item.role}</span>)}</div>
           <div className="mt-10 flex flex-wrap justify-center gap-4"><a className="rounded-xl bg-cyan-500 px-7 py-3.5 font-bold text-[#020214] transition hover:-translate-y-0.5 hover:bg-cyan-300" href="#projects">{content.hero.primaryButtonLabel}</a><a className="rounded-xl border border-white/15 bg-white/5 px-7 py-3.5 font-bold transition hover:border-cyan-400/50 hover:text-cyan-300" href="#contact">{content.hero.secondaryButtonLabel}</a></div>
           <p className="mt-14 text-sm text-slate-500">{content.hero.techLabel}</p>
