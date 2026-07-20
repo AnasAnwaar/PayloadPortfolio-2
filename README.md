@@ -1,5 +1,26 @@
 # Payload Website Template
 
+## Portfolio CMS
+
+This project recreates the `syedibad.dev` portfolio experience as a Next.js + Payload website backed by SQLite.
+
+Open `/admin` and use the **Portfolio** group to manage the site:
+
+- **Portfolio Website** global: identity, navigation, hero, about, section headings, metrics, contact details, social links, footer, resume, and SEO media.
+- **Skill Categories / Skills**: create categories, set proficiency and featured skills, and add entries to each category.
+- **Experience Categories / Experiences**: manage filters, roles, employers, logos, achievements, and linked technologies.
+- **Project Categories / Portfolio Projects**: manage project cards and full case studies, including hero media, technologies, links, features, screenshots, contributors, and related projects.
+- **Achievements**: manage competition highlights, workshops, certifications, issuers, dates, descriptions, and media.
+- **Media**: upload or replace every image and document used by the portfolio.
+
+To restore the supplied editable starter content and media, run:
+
+```bash
+npm run seed:portfolio
+```
+
+The seed is idempotent: it updates matching portfolio records instead of duplicating them.
+
 This is the official [Payload Website Template](https://github.com/payloadcms/payload/blob/3.x/templates/website). Use it to power websites, blogs, or portfolios from small to enterprise. This repo includes a fully-working backend, enterprise-grade admin panel, and a beautifully designed, production-ready website.
 
 This template is right for you if you are working on:
