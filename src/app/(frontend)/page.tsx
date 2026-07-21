@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 
 import { PortfolioHome } from '@/components/portfolio/PortfolioHome'
 import { portfolioSeed } from '@/data/portfolioDefaults'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
 export const dynamic = 'force-dynamic'
 
@@ -38,8 +39,23 @@ export default async function HomePage() {
 export async function generateMetadata(): Promise<Metadata> {
   const payload = await getPayload({ config: configPromise })
   const portfolio = await payload.findGlobal({ slug: 'portfolio', depth: 1 })
+  const seo = portfolio.seo
+
+  const title = seo?.title || portfolioSeed.seo.title
+  const description = seo?.description || portfolioSeed.seo.description
+  const keywords = (seo?.keywords?.length ? seo.keywords : portfolioSeed.seo.keywords)
+    ?.map((k) => k.tag)
+    .filter((tag): tag is string => Boolean(tag))
+  const ogImageUrl = typeof seo?.ogImage === 'object' ? seo.ogImage?.url : undefined
+
   return {
-    title: portfolio.seo?.title || portfolioSeed.seo.title,
-    description: portfolio.seo?.description || portfolioSeed.seo.description,
+    title,
+    description,
+    keywords,
+    openGraph: mergeOpenGraph({
+      title,
+      description: description ?? undefined,
+      images: ogImageUrl ? [{ url: ogImageUrl }] : undefined,
+    }),
   }
 }

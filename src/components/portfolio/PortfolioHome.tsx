@@ -174,8 +174,8 @@ export function PortfolioHome(props: Props) {
       <section className="scroll-mt-24 px-5 py-24" id="about">
         <div className="mx-auto max-w-[1280px]">
           <SectionHeading description={content.about.description} heading={content.about.heading} />
-          <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
-            <div>
+          <div className="grid items-start gap-14 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="lg:sticky lg:top-24">
               <div className="relative mx-auto max-w-md">
                 <div className="absolute -inset-5 rotate-3 rounded-3xl bg-line" />
                 <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-raised to-line">{profileImage ? <Image alt={content.identity.name} className="object-cover" fill priority sizes="(max-width: 1024px) 28rem, 36vw" src={profileImage} unoptimized /> : <div className="grid size-full place-items-center text-8xl font-bold text-ink">{content.identity.initials}</div>}</div>

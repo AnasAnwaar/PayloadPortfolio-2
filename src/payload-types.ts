@@ -2122,8 +2122,23 @@ export interface Portfolio {
     copyright?: string | null;
   };
   seo?: {
+    /**
+     * Browser tab title and default page title.
+     */
     title?: string | null;
+    /**
+     * Meta description shown in search results and link previews.
+     */
     description?: string | null;
+    /**
+     * SEO keywords / meta tags. Added to the page as <meta name="keywords"> and OpenGraph tags.
+     */
+    keywords?:
+      | {
+          tag: string;
+          id?: string | null;
+        }[]
+      | null;
     ogImage?: (number | null) | Media;
   };
   updatedAt?: string | null;
@@ -2324,6 +2339,12 @@ export interface PortfolioSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+        keywords?:
+          | T
+          | {
+              tag?: T;
+              id?: T;
+            };
         ogImage?: T;
       };
   updatedAt?: T;

@@ -105,7 +105,7 @@ export const achievementSeeds = [
 ]
 
 export const portfolioSeed = {
-  identity: { name: 'Syed Ibad Ali', initials: 'SI', professionalTitle: 'Backend Engineer', shortBio: 'Backend Engineer building scalable solutions with Node.js, Python, and AI/ML. Passionate about teaching and creating impact through technology.' },
+  identity: { name: 'anas', initials: 'SI', professionalTitle: 'Backend Engineer', shortBio: 'Backend Engineer building scalable solutions with Node.js, Python, and AI/ML. Passionate about teaching and creating impact through technology.' },
   navigation: ['Home', 'About', 'Experience', 'Skills', 'Projects', 'Achievements', 'Contact'].map((label) => ({ label, href: label === 'Home' ? '#home' : `#${label.toLowerCase()}` })),
   hero: { availability: 'Available for opportunities', eyebrow: "Hi, I'm", headline: 'Syed Ibad Ali', taglines: ['2x Competition Winner', 'Teaching 100+ Students', 'Building Scalable Backends', 'AI/ML Explorer'].map((text) => ({ text })), roles: ['Backend Engineer', 'IT Instructor', 'Web Developer', 'Shopify Developer'].map((role) => ({ role })), primaryButtonLabel: 'View My Work', secondaryButtonLabel: "Let's Connect", techLabel: 'Tech I love working with' },
   about: {
@@ -125,5 +125,5 @@ export const portfolioSeed = {
   achievementStats: [{ value: '2x', label: 'Competition Winner', color: 'amber' }, { value: '8+', label: 'Certifications', color: 'green' }, { value: '100+', label: 'Students Taught', color: 'cyan' }, { value: '1', label: 'Workshop Conducted', color: 'purple' }],
   contact: { heading: 'Get In Touch', description: "Have a project in mind or want to collaborate? I'd love to hear from you. Let's build something amazing together!", formHeading: 'Send a Message', responseNote: "I'll respond within 24 hours", email: 'ibad1657@gmail.com', phone: '+92 336 8251372', location: 'Karachi, Sindh, Pakistan', availabilityHeading: 'Currently Available', availabilityText: "I'm open to new opportunities, freelance projects, and interesting collaborations. Feel free to reach out!", availabilityTags: ['Full-time positions', 'Freelance projects', 'Consulting'].map((label) => ({ label })), socialLinks: [{ label: 'LinkedIn', url: 'https://linkedin.com/in/syed-ibad-developer' }, { label: 'GitHub', url: 'https://github.com/syedibad' }] },
   footer: { description: 'Backend Engineer building scalable solutions with Node.js, Python, and AI/ML.', copyright: '© 2026 Syed Ibad Ali. All rights reserved.' },
-  seo: { title: 'Syed Ibad Ali | Backend Engineer & Full-Stack Developer', description: 'Software Engineer specializing in Node.js, Python, AI/ML, and Shopify development.' },
+  seo: { title: 'Anas Anwaar', description: 'Software Engineer specializing in Node.js, Python, AI/ML, and Shopify development.', keywords: ['Software Engineer', 'Node.js', 'Python', 'AI/ML', 'Shopify Developer', 'Backend Engineer'].map((tag) => ({ tag })) },
 }

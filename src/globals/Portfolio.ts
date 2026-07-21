@@ -127,11 +127,19 @@ export const Portfolio: GlobalConfig = {
     },
     {
       name: 'seo',
+      label: 'SEO',
       type: 'group',
       fields: [
-        { name: 'title', type: 'text' },
-        { name: 'description', type: 'textarea' },
-        { name: 'ogImage', type: 'upload', relationTo: 'media' },
+        { name: 'title', type: 'text', admin: { description: 'Browser tab title and default page title.' } },
+        { name: 'description', type: 'textarea', admin: { description: 'Meta description shown in search results and link previews.' } },
+        {
+          name: 'keywords',
+          label: 'Tags / Keywords',
+          type: 'array',
+          admin: { description: 'SEO keywords / meta tags. Added to the page as <meta name="keywords"> and OpenGraph tags.' },
+          fields: [{ name: 'tag', type: 'text', required: true }],
+        },
+        { name: 'ogImage', label: 'Social Share Image (OG)', type: 'upload', relationTo: 'media' },
       ],
     },
   ],

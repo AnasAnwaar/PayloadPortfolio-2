@@ -2,19 +2,22 @@ build
 dist / media
 node_modules
 .DS_Store
-.env
 .next
 next-env.d.ts
 *.tsbuildinfo
 .vercel
 
-# Local SQLite database and write-ahead log files
-payload.db
+# .env is tracked intentionally (private repo). Still ignore local-only overrides:
+.env.local
+.env.*.local
+
+# Local SQLite database — tracked intentionally (private repo).
+# The write-ahead log / shared-memory files are transient runtime artifacts, keep them ignored:
 payload.db-shm
 payload.db-wal
 
-# Payload default media upload directory
-public/media/
+# Payload media uploads — tracked intentionally (private repo, keeps clones self-contained)
+# public/media/
 
 public/robots.txt
 public/sitemap*.xml
