@@ -65,7 +65,11 @@ export default buildConfig({
   db: sqliteAdapter({
     client: {
       url: process.env.DATABASE_URL || '',
+      // Required for hosted libSQL (Turso) in production. Undefined locally (plain file DB), which is fine.
+      authToken: process.env.DATABASE_AUTH_TOKEN,
     },
+    // Local dev auto-pushes schema; production (Vercel) uses committed migrations instead.
+    // Run via the `payload migrate` step in the build command.
   }),
   collections: [
     PortfolioProjects,

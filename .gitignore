@@ -16,6 +16,9 @@ next-env.d.ts
 payload.db-shm
 payload.db-wal
 
+# Local database backups — keep out of version control:
+payload.db.backup-*
+
 # Payload media uploads — tracked intentionally (private repo, keeps clones self-contained)
 # public/media/
 

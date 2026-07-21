@@ -2,7 +2,7 @@
 
 ## Portfolio CMS
 
-This project recreates the `syedibad.dev` portfolio experience as a Next.js + Payload website backed by SQLite.
+This project powers M Anas Anwaar's portfolio as a Next.js + Payload website backed by SQLite.
 
 Open `/admin` and use the **Portfolio** group to manage the site:
 
